@@ -7,7 +7,7 @@ namespace StringsCalculator
 {
     public class Calculator
     {
-        private readonly List<string> _defaultDelimiters = new List<string> { "," };
+        private readonly List<string> _defaultDelimiters = new List<string> { ",", "\n" };
 
         public int Add(string numbers)
         {
