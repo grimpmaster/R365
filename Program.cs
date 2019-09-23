@@ -21,6 +21,8 @@ namespace StringsCalculator
             Stopwatch swFour = new Stopwatch();
             Stopwatch swFive = new Stopwatch();
             Stopwatch swSix = new Stopwatch();
+            Stopwatch swSeven = new Stopwatch();
+            Stopwatch swEight = new Stopwatch();
 
             sw.Start();
 
@@ -54,12 +56,26 @@ namespace StringsCalculator
             TestACSix(calculator);
             swSix.Stop();
 
+
+            Console.WriteLine("Expression: ");
+            swSeven.Start();
+            TestACSeven(calculator);
+            swSeven.Stop();
+
+            Console.WriteLine("Expression: ");
+            swEight.Start();
+            TestACEight(calculator);
+            swEight.Stop();
+
             Console.WriteLine("AC #1 Elapsed Time: {0} ms", swOne.Elapsed.Ticks);
             Console.WriteLine("AC #2 Elapsed Time: {0} ms", swTwo.Elapsed.Ticks);
             Console.WriteLine("AC #3 Elapsed Time: {0} ms", swThree.Elapsed.Ticks);
             Console.WriteLine("AC #4 Elapsed Time: {0} ms", swFour.Elapsed.Ticks);
             Console.WriteLine("AC #5 Elapsed Time: {0} ms", swFive.Elapsed.Ticks);
             Console.WriteLine("AC #6 Elapsed Time: {0} ms", swSix.Elapsed.Ticks);
+            Console.WriteLine("AC #7 Elapsed Time: {0} ms", swSeven.Elapsed.Ticks);
+            Console.WriteLine("AC #8 Elapsed Time: {0} ms", swEight.Elapsed.Ticks);
+
             Console.WriteLine("Total Elapsed Time: {0} ms", sw.Elapsed.Ticks);
             Console.WriteLine("");
             Console.WriteLine("All Acceptance Criteria Met!");
@@ -165,6 +181,31 @@ namespace StringsCalculator
             };
 
             WriteToConsole(acSixTitle, acSixDescription, acSixInputs);
+        }
+
+        private static void TestACSeven(Calculator calculator)
+        {
+            var acSevenInputOne = "//[***][\n]11***22***33";
+            var acSevenTitle = "AC #7";
+            var acSevenDescription = "Support 1 custom delimiter of any lengthuse the format: //[{delimiter}]\n{numbers} e.g. //[***][\n]11***22***33 will return 66 all previous formats should also be supported";
+            var acSevenInputs = new List<string>()
+            {
+                string.Format("Input: {0} | Output: =: {1}",acSevenInputOne, calculator.Add(acSevenInputOne))
+            };
+
+            WriteToConsole(acSevenTitle, acSevenDescription, acSevenInputs);
+        }
+        private static void TestACEight(Calculator calculator)
+        {
+            var acEightInputOne = "//[*][!!][r9r]\n11r9r22*33!!44";
+            var acEightTitle = "AC #8";
+            var acEightDescription = "Support multiple delimiters of any length use the format: //[{delimiter1}][{delimiter2}]...\n{numbers} e.g. //[*][!!][r9r]\n11r9r22*33!!44 will return 110 all previous formats should also be supported";
+            var acEightInputs = new List<string>()
+            {
+                string.Format("Input: {0} | Output: =: {1}",acEightInputOne, calculator.Add(acEightInputOne))
+            };
+
+            WriteToConsole(acEightTitle, acEightDescription, acEightInputs);
         }
 
         private static void WriteToConsole(string title, string description, List<string> inputs)
