@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace StringsCalculator
 {
@@ -44,6 +45,22 @@ namespace StringsCalculator
         public int SupportNewlineCharAsAltDelim(string numbers)
         {
             return Calculate(numbers);
+        }
+
+        // AC #4: Deny negative numbers. An exception should be thrown that includes all of the negative numbers provided
+        [Test]
+        [TestCase("23,-465", ExpectedResult = -1)]
+        //this version does not support expectedException (booo) so making unit test work by replacing exception with -1
+        public int DenyNegativeNumbers(string numbers)
+        {
+            try
+            {
+                return Calculate(numbers);
+            }
+            catch (FormatException ex)
+            {
+                return -1;
+            }
         }
     }
 }

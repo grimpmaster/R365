@@ -42,9 +42,16 @@ namespace StringsCalculator
             Console.WriteLine("{0}", sb);
             Console.WriteLine("-------------------------------------------");
 
+            ValidatePositiveNumbers(numbersOnlyList);
 
             var sumOfNumbers = numbersOnlyList.Where(x => x <= 1000).Sum();
             return sumOfNumbers;
+        }
+
+        private static void ValidatePositiveNumbers(IReadOnlyCollection<int> convertedNumbers)
+        {
+            if (!convertedNumbers.Any(x => x < 0)) return;
+            throw new FormatException("negatives not allowed");
         }
     }
 }
