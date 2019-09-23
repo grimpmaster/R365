@@ -79,5 +79,24 @@ namespace StringsCalculator
         {
             return Calculate(numbers);
         }
+
+        // AC #7: 
+        // Support 1 custom delimiter of any lengthuse the format: //[{delimiter}]\n{numbers} e.g. //[***]\n11***22***33 will return 66 all previous formats should also be supported
+        [Test]
+        [TestCase("//[***][\n]11***22***33", ExpectedResult = 66)]
+        public int SupportOneCustomDelimAnyLength(string numbers)
+        {
+            return Calculate(numbers);
+        }
+
+        // AC #8:
+        // Support multiple delimiters of any length use the format: //[{delimiter1}][{delimiter2}]...\n{numbers} e.g. //[*][!!][r9r]\n11r9r22*33!!44 will return 110
+        // all previous formats should also be supported
+        [Test]
+        [TestCase("//[*][!!][r9r]\n11r9r22*33!!44", ExpectedResult = 110)]
+        public int SupportMultipleDelims(string numbers)
+        {
+            return Calculate(numbers);
+        }
     }
 }
