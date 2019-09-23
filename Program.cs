@@ -20,6 +20,7 @@ namespace StringsCalculator
             Stopwatch swThree = new Stopwatch();
             Stopwatch swFour = new Stopwatch();
             Stopwatch swFive = new Stopwatch();
+            Stopwatch swSix = new Stopwatch();
 
             sw.Start();
 
@@ -48,11 +49,17 @@ namespace StringsCalculator
             TestACFive(calculator);
             swFive.Stop();
 
+            Console.WriteLine("Expression: ");
+            swSix.Start();
+            TestACSix(calculator);
+            swSix.Stop();
+
             Console.WriteLine("AC #1 Elapsed Time: {0} ms", swOne.Elapsed.Ticks);
             Console.WriteLine("AC #2 Elapsed Time: {0} ms", swTwo.Elapsed.Ticks);
             Console.WriteLine("AC #3 Elapsed Time: {0} ms", swThree.Elapsed.Ticks);
             Console.WriteLine("AC #4 Elapsed Time: {0} ms", swFour.Elapsed.Ticks);
             Console.WriteLine("AC #5 Elapsed Time: {0} ms", swFive.Elapsed.Ticks);
+            Console.WriteLine("AC #6 Elapsed Time: {0} ms", swSix.Elapsed.Ticks);
             Console.WriteLine("Total Elapsed Time: {0} ms", sw.Elapsed.Ticks);
             Console.WriteLine("");
             Console.WriteLine("All Acceptance Criteria Met!");
@@ -66,7 +73,7 @@ namespace StringsCalculator
             var acOneInputThree = "1,ccc,500";
             var acOneTitle = "AC #1";
             var acOneDescription =
-                "Support a maximum of 2 numbers using a comma delimiter examples: 20 will return 20;\n 1,5000 will return 5001 invalid/missing numbers should be converted to 0 \n e.g. \"\" will return 0; 5,tytyt will return 5";
+                "Support a maximum of 2 numbers using a comma delimiter examples: 20 will return 20;\\n 1,5000 will return 5001 invalid/missing numbers should be converted to 0 \n e.g. \"\" will return 0; 5,tytyt will return 5";
             var acOneInputs = new List<string>
             {
                 string.Format("Input: {0} | Output: {1}",acOneInputOne, calculator.Add(acOneInputOne)),
@@ -146,7 +153,19 @@ namespace StringsCalculator
 
             WriteToConsole(acFiveTitle, acFiveDescription, acFiveInputs);
         }
+        private static void TestACSix(Calculator calculator)
+        {
+            var acSixInputOne = "//;\n2;5";
+            var acSixTitle = "AC #6";
+            var acSixDescription =
+                "Support 1 custom single character length delimiter use the format: //{delimiter}\\n{numbers} e.g. //;\\n2;5 will return 7 all previous formats should also be supported";
+            var acSixInputs = new List<string>()
+            {
+                string.Format("Input: {0}| Output: {1}",acSixInputOne, calculator.Add(acSixInputOne))
+            };
 
+            WriteToConsole(acSixTitle, acSixDescription, acSixInputs);
+        }
 
         private static void WriteToConsole(string title, string description, List<string> inputs)
         {

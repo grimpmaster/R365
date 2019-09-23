@@ -70,5 +70,14 @@ namespace StringsCalculator
         {
             return Calculate(numbers);
         }
+
+        // AC #6: Support 1 custom single character length delimiter use the format: //{delimiter}\n{numbers} e.g. //;\n2;5 will return 7
+        // all previous formats should also be supported
+        [Test]
+        [TestCase("//;\n2;5", ExpectedResult = 7)]
+        public int SupportOneCustomDelim(string numbers)
+        {
+            return Calculate(numbers);
+        }
     }
 }
