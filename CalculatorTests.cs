@@ -62,5 +62,13 @@ namespace StringsCalculator
                 return -1;
             }
         }
+
+        // AC #5: Ignore any number greater than 1000 e.g. 2,1001,6 will return 8
+        [Test]
+        [TestCase("2,1001,6", ExpectedResult = 8)]
+        public int IgnoreNumbersGreaterThanMaxNumbers(string numbers)
+        {
+            return Calculate(numbers);
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace StringsCalculator
             Stopwatch swTwo = new Stopwatch();
             Stopwatch swThree = new Stopwatch();
             Stopwatch swFour = new Stopwatch();
+            Stopwatch swFive = new Stopwatch();
 
             sw.Start();
 
@@ -42,10 +43,16 @@ namespace StringsCalculator
             TestACFour(calculator);
             swFour.Stop();
 
+            Console.WriteLine("Expression: ");
+            swFive.Start();
+            TestACFive(calculator);
+            swFive.Stop();
+
             Console.WriteLine("AC #1 Elapsed Time: {0} ms", swOne.Elapsed.Ticks);
             Console.WriteLine("AC #2 Elapsed Time: {0} ms", swTwo.Elapsed.Ticks);
             Console.WriteLine("AC #3 Elapsed Time: {0} ms", swThree.Elapsed.Ticks);
             Console.WriteLine("AC #4 Elapsed Time: {0} ms", swFour.Elapsed.Ticks);
+            Console.WriteLine("AC #5 Elapsed Time: {0} ms", swFive.Elapsed.Ticks);
             Console.WriteLine("Total Elapsed Time: {0} ms", sw.Elapsed.Ticks);
             Console.WriteLine("");
             Console.WriteLine("All Acceptance Criteria Met!");
@@ -124,6 +131,20 @@ namespace StringsCalculator
                 Console.WriteLine(Constants.ConsoleLine);
             }
 
+        }
+
+        private static void TestACFive(Calculator calculator)
+        {
+            var acFiveInputOne = "2,1001,6";
+            var acFiveTitle = "AC #5";
+            var acFiveDescription =
+                "Ignore any number greater than 1000 e.g. 2,1001,6 will return 8";
+            var acFiveInputs = new List<string>()
+            {
+                string.Format("Input: {0} | Output: {1}", acFiveInputOne, calculator.Add(acFiveInputOne))
+            };
+
+            WriteToConsole(acFiveTitle, acFiveDescription, acFiveInputs);
         }
 
 
