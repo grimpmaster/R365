@@ -13,6 +13,10 @@ namespace StringsCalculator
         {
             if (string.IsNullOrEmpty(numbers)) return 0;
 
+            if (numbers.StartsWith(Constants.CustomDelimiterIdentifier))
+            {
+                numbers = GetNumbersExcludingCustomDelimiter(numbers);
+            }
             return  GetSumOfNumbers(numbers);
         }
 
@@ -52,6 +56,41 @@ namespace StringsCalculator
         {
             if (!convertedNumbers.Any(x => x < 0)) return;
             throw new FormatException("negatives not allowed");
+        }
+
+        private string GetNumbersExcludingCustomDelimiter(string numbers)
+        {
+            var startIndexOfString = AssignCustomDelimiterAndReturnStartIndexOfNumbers(numbers);
+
+            numbers = numbers.Substring(startIndexOfString);
+            return numbers;
+        }
+
+        private int AssignCustomDelimiterAndReturnStartIndexOfNumbers(string numbers)
+        {
+            var customDelimiters = GetCustomDelimiter(numbers);
+            _defaultDelimiters.AddRange(customDelimiters);
+
+            var hasMultipleDelimiters = customDelimiters.Count > 1;
+            var multipleDelimiterLength = hasMultipleDelimiters ? customDelimiters.Count * 2 : 0;
+
+            return Constants.StartIndexOfNumbersWithCustomDelimiter + customDelimiters.Sum(x => x.Length) +
+                   multipleDelimiterLength;
+        }
+
+        private static IList<string> GetCustomDelimiter(string numbers)
+        {
+            var allDelimiters = numbers.Substring(Constants.StartIndexOfCustomDelimiter,
+                numbers.IndexOf('\n') - Constants.StartIndexOfCustomDelimiter);
+
+            var splitDelimiters = allDelimiters.Split('[').Select(x => x.TrimEnd(']')).ToList();
+
+            if (splitDelimiters.Contains(string.Empty))
+            {
+                splitDelimiters.Remove(string.Empty);
+            }
+
+            return splitDelimiters;
         }
     }
 }
