@@ -7,9 +7,9 @@ namespace StringsCalculator
 {
     public class Calculator
     {
-        private readonly List<string> _defaultDelimiters = new List<string> { ",", "\n" };
+        private readonly List<string> _defaultDelimiters = new List<string> { ",", "\n", "\t" };
 
-        public int Add(string numbers)
+        public int Add(string numbers, int limit = Constants.MaxNumberLimit, bool allowNegatives = false)
         {
             if (string.IsNullOrEmpty(numbers)) return 0;
 
@@ -17,10 +17,10 @@ namespace StringsCalculator
             {
                 numbers = GetNumbersExcludingCustomDelimiter(numbers);
             }
-            return  GetSumOfNumbers(numbers);
+            return GetSumOfNumbers(numbers, limit, allowNegatives);
         }
 
-        private int GetSumOfNumbers(string numbers)
+        private int GetSumOfNumbers(string numbers, int limit, bool allowNegatives)
         {
             var convertedNumbers =
                 numbers.Split(_defaultDelimiters.ToArray(), StringSplitOptions.None);
@@ -37,19 +37,30 @@ namespace StringsCalculator
                     numbersOnlyList.Add(n);
                 }
             }
+
+            PrintExpression(sb, numbersOnlyList);
+
+
+            if (!allowNegatives)
+            {
+                ValidateNumbersArePositive(numbersOnlyList);
+            }
+
+            var sumOfNumbers = numbersOnlyList.Where(x => x <= 1000).Sum();
+            return sumOfNumbers;
+        }
+
+        // Stretch Goal #1 - Display the formula used to calculate the result e.g. 2,4,rrrr,1001,6 will return 2+4+0+0+6 = 12
+        private static void PrintExpression(StringBuilder sb, List<int> numbersOnlyList)
+        {
             var expression = sb.ToString().Remove(sb.ToString().LastIndexOf('+'));
             sb = new StringBuilder();
-
             sb.Append(String.Format(" {0}= {1}", expression, numbersOnlyList.Sum()));
             Console.WriteLine("");
             Console.WriteLine("-------------------------------------------");
             Console.WriteLine("{0}", sb);
             Console.WriteLine("-------------------------------------------");
-
-            ValidatePositiveNumbers(numbersOnlyList);
-
-            var sumOfNumbers = numbersOnlyList.Where(x => x <= 1000).Sum();
-            return sumOfNumbers;
+            // End Stretch Goal #1
         }
 
         private static void ValidatePositiveNumbers(IReadOnlyCollection<int> convertedNumbers)
@@ -74,14 +85,14 @@ namespace StringsCalculator
             var hasMultipleDelimiters = customDelimiters.Count > 1;
             var multipleDelimiterLength = hasMultipleDelimiters ? customDelimiters.Count * 2 : 0;
 
-            return Constants.StartIndexOfNumbersWithCustomDelimiter + customDelimiters.Sum(x => x.Length) +
+            return Constants.NumbersWithCustomDelimiterStartIndex + customDelimiters.Sum(x => x.Length) +
                    multipleDelimiterLength;
         }
 
         private static IList<string> GetCustomDelimiter(string numbers)
         {
-            var allDelimiters = numbers.Substring(Constants.StartIndexOfCustomDelimiter,
-                numbers.IndexOf('\n') - Constants.StartIndexOfCustomDelimiter);
+            var allDelimiters = numbers.Substring(Constants.CustomDelimiterStartIndex,
+                numbers.IndexOf('\n') - Constants.CustomDelimiterStartIndex);
 
             var splitDelimiters = allDelimiters.Split('[').Select(x => x.TrimEnd(']')).ToList();
 
@@ -91,6 +102,12 @@ namespace StringsCalculator
             }
 
             return splitDelimiters;
+        }
+
+        private static void ValidateNumbersArePositive(IReadOnlyCollection<int> convertedNumbers)
+        {
+            if (!convertedNumbers.Any(x => x < 0)) return;
+            throw new FormatException("negatives not allowed");
         }
     }
 }

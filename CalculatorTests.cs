@@ -14,15 +14,13 @@ namespace StringsCalculator
             stringCalc = new Calculator();
         }
 
-        private int Calculate(string numbers)
+        private int Calculate(string numbers, int limit = Constants.MaxNumberLimit, bool allowNegatives = true)
         {
-            var calculatedResult = stringCalc.Add(numbers);
-
-            return calculatedResult;
+            return stringCalc.Add(numbers, Constants.MaxNumberLimit, allowNegatives);
         }
 
-        //// AC #1: Support a maximum of 2 numbers using a comma delimiterexamples: 20 will return 20; 1,5000 will return 5001
-        ////        invalid/missing numbers should be converted to 0 e.g. "" will return 0; 5,tytyt will return 5
+        // AC #1: Support a maximum of 2 numbers using a comma delimiterexamples: 20 will return 20; 1,5000 will return 5001
+        //        invalid/missing numbers should be converted to 0 e.g. "" will return 0; 5,tytyt will return 5
         [Test]
         [TestCase("1", ExpectedResult = 1)]
         [TestCase("1,5000", ExpectedResult = 1)]
@@ -31,7 +29,7 @@ namespace StringsCalculator
             return Calculate(numbers);
         }
 
-        //// AC #2: Support an unlimited number of numbers e.g. 1,2,3,4,5,6,7,8,9,10,11,12 will return 78
+        // AC #2: Support an unlimited number of numbers e.g. 1,2,3,4,5,6,7,8,9,10,11,12 will return 78
         [Test]
         [TestCase("1,2,3,4,5,6,7,8,9,10,11,12", ExpectedResult = 78)]
         public int AC2_SupportUnlimtedNumbers(string numbers)
@@ -39,7 +37,7 @@ namespace StringsCalculator
             return Calculate(numbers);
         }
 
-        //// AC #3: Support a newline character as an alternative delimiter e.g. 1\n2,3 will return 6
+        // AC #3: Support a newline character as an alternative delimiter e.g. 1\n2,3 will return 6
         [Test]
         [TestCase("1\n2,3", ExpectedResult = 6)]
         public int SupportNewlineCharAsAltDelim(string numbers)
@@ -55,7 +53,7 @@ namespace StringsCalculator
         {
             try
             {
-                return Calculate(numbers);
+                return Calculate(numbers,Constants.MaxNumberLimit, false);
             }
             catch (FormatException ex)
             {
@@ -98,5 +96,39 @@ namespace StringsCalculator
         {
             return Calculate(numbers);
         }
+
+        // SG #3a:
+        // Allow the acceptance of arguments to define - alternate delimiter in step #3
+        [Test]
+        [TestCase("1\t2,3", ExpectedResult = 6)]
+        public int SupportAlternateDelim(string numbers)
+        {
+            return Calculate(numbers);
+        }
+
+        // SG #3b:
+        // Allow the acceptance of arguments to define - toggle whether to deny negative numbers in step #4
+        [Test]
+        [TestCase("23,-465", ExpectedResult = -442)]
+        public int SupportToggleNegative(string numbers)
+        {
+            return Calculate(numbers);
+        }
+
+        // SG #3c:
+        // Allow the acceptance of arguments to define - upper bound in step #5
+        [Test]
+        [TestCase("1000,1000", ExpectedResult = 2000)]
+        public int SupportCustomUpperBound(string numbers)
+        {
+            return Calculate(numbers);
+        }
+
+        // SG #4 
+        // Dependency Injection - NO THANKS - ABSTRACT HELL
+
+        // SG #5 
+        // Support subtraction, multiplication, and division operations - OUT OF TIME
+
     }
 }
