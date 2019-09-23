@@ -18,24 +18,34 @@ namespace StringsCalculator
             Stopwatch swOne = new Stopwatch();
             Stopwatch swTwo = new Stopwatch();
             Stopwatch swThree = new Stopwatch();
+            Stopwatch swFour = new Stopwatch();
 
             sw.Start();
 
+            Console.WriteLine("Expression: ");
             swOne.Start();
             TestACOne(calculator);
             swOne.Stop();
 
+            Console.WriteLine("Expression: ");
             swTwo.Start();
             TestACTwo(calculator);
             swTwo.Stop();
 
+            Console.WriteLine("Expression: ");
             swThree.Start();
             TestACThree(calculator);
             swThree.Stop();
 
+            Console.WriteLine("Expression: ");
+            swFour.Start();
+            TestACFour(calculator);
+            swFour.Stop();
+
             Console.WriteLine("AC #1 Elapsed Time: {0} ms", swOne.Elapsed.Ticks);
             Console.WriteLine("AC #2 Elapsed Time: {0} ms", swTwo.Elapsed.Ticks);
             Console.WriteLine("AC #3 Elapsed Time: {0} ms", swThree.Elapsed.Ticks);
+            Console.WriteLine("AC #4 Elapsed Time: {0} ms", swFour.Elapsed.Ticks);
             Console.WriteLine("Total Elapsed Time: {0} ms", sw.Elapsed.Ticks);
             Console.WriteLine("");
             Console.WriteLine("All Acceptance Criteria Met!");
@@ -87,6 +97,33 @@ namespace StringsCalculator
             };
 
             WriteToConsole(acThreeTitle, acThreeDescription, acThreeInputs);
+        }
+
+        private static void TestACFour(Calculator calculator)
+        {
+            var acFourInputOne = "23,-465";
+            var acFourTitle = "AC #4";
+            var acFourDescription =
+                "Deny negative numbers. An exception should be thrown that includes all of the negative numbers provided";
+            try
+            {
+                var acFourInputs = new List<string>()
+            {
+                string.Format("Input: {0} | Output: {1}",acFourInputOne, calculator.Add(acFourInputOne))
+            };
+                WriteToConsole(acFourTitle, acFourDescription, acFourInputs);
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine(Constants.ConsoleLine);
+                Console.WriteLine("{0}", acFourTitle);
+                Console.WriteLine(new string('-', 50));
+                Console.WriteLine("{0}", acFourDescription);
+                Console.WriteLine(new string('-', 50));
+                Console.WriteLine("Exception Occurred: Input: {0} | Output: {1}", acFourInputOne, ex.Message);
+                Console.WriteLine(Constants.ConsoleLine);
+            }
+
         }
 
 
