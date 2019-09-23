@@ -37,5 +37,13 @@ namespace StringsCalculator
         {
             return Calculate(numbers);
         }
+
+        //// AC #3: Support a newline character as an alternative delimiter e.g. 1\n2,3 will return 6
+        [Test]
+        [TestCase("1\n2,3", ExpectedResult = 6)]
+        public int SupportNewlineCharAsAltDelim(string numbers)
+        {
+            return Calculate(numbers);
+        }
     }
 }

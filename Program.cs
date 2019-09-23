@@ -17,20 +17,25 @@ namespace StringsCalculator
             Stopwatch sw = new Stopwatch();
             Stopwatch swOne = new Stopwatch();
             Stopwatch swTwo = new Stopwatch();
+            Stopwatch swThree = new Stopwatch();
 
             sw.Start();
-            Console.WriteLine("Expression: ");
+
             swOne.Start();
             TestACOne(calculator);
             swOne.Stop();
 
-            Console.WriteLine("Expression: ");
             swTwo.Start();
             TestACTwo(calculator);
             swTwo.Stop();
 
+            swThree.Start();
+            TestACThree(calculator);
+            swThree.Stop();
+
             Console.WriteLine("AC #1 Elapsed Time: {0} ms", swOne.Elapsed.Ticks);
             Console.WriteLine("AC #2 Elapsed Time: {0} ms", swTwo.Elapsed.Ticks);
+            Console.WriteLine("AC #3 Elapsed Time: {0} ms", swThree.Elapsed.Ticks);
             Console.WriteLine("Total Elapsed Time: {0} ms", sw.Elapsed.Ticks);
             Console.WriteLine("");
             Console.WriteLine("All Acceptance Criteria Met!");
@@ -68,6 +73,20 @@ namespace StringsCalculator
             };
 
             WriteToConsole(acTwoTitle, acTwoDescription, acTwoInputs);
+        }
+
+        private static void TestACThree(Calculator calculator)
+        {
+            var acThreeInputOne = "1\n2,3";
+            var acThreeTitle = "AC #3";
+            var acThreeDescription =
+                "Support a newline character as an alternative delimiter e.g. 1\\n2,3 will return 6";
+            var acThreeInputs = new List<string>()
+            {
+                string.Format("Input: {0} | Output: {1}",acThreeInputOne, calculator.Add(acThreeInputOne))
+            };
+
+            WriteToConsole(acThreeTitle, acThreeDescription, acThreeInputs);
         }
 
 
